@@ -36,7 +36,6 @@ let printJCase i =
 let printCode maxCases =
     """namespace Fleece
     
-open System
 open Fleece
     
 [<AutoOpen>]
