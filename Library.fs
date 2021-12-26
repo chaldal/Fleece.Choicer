@@ -1,5 +1,5 @@
 namespace Fleece
-
+    
 open Fleece
     
 [<AutoOpen>]
@@ -539,14 +539,14 @@ module Choicer =
         call (Unchecked.defaultof<Choice20OfN>, Unchecked.defaultof<'rt>, (x, y))
 
     [<AutoOpen>]
-    type jcases =
-        static member jcase (case1) = fun matcher ->
+    type Cases =
+        static member withCases (case1) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             codec {
                 Codec.map case1 (f1 (matcher >> (function Choice1Of1 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice1Of1 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2) = fun matcher ->
+        static member withCases (case1, case2) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             codec {
@@ -554,7 +554,7 @@ module Choicer =
                 Codec.map case2 (f2 (matcher >> (function Choice2Of2 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice2Of2 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3) = fun matcher ->
+        static member withCases (case1, case2, case3) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -564,7 +564,7 @@ module Choicer =
                 Codec.map case3 (f3 (matcher >> (function Choice3Of3 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice3Of3 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4) = fun matcher ->
+        static member withCases (case1, case2, case3, case4) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -576,7 +576,7 @@ module Choicer =
                 Codec.map case4 (f4 (matcher >> (function Choice4Of4 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice4Of4 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -590,7 +590,7 @@ module Choicer =
                 Codec.map case5 (f5 (matcher >> (function Choice5Of5 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice5Of5 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -606,7 +606,7 @@ module Choicer =
                 Codec.map case6 (f6 (matcher >> (function Choice6Of6 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice6Of6 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -624,7 +624,7 @@ module Choicer =
                 Codec.map case7 (f7 (matcher >> (function Choice7Of7 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice7Of7 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -644,7 +644,7 @@ module Choicer =
                 Codec.map case8 (f8 (matcher >> (function Choice8Of8 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice8Of8 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -666,7 +666,7 @@ module Choicer =
                 Codec.map case9 (f9 (matcher >> (function Choice9Of9 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice9Of9 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -690,7 +690,7 @@ module Choicer =
                 Codec.map case10 (f10 (matcher >> (function Choice10Of10 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice10Of10 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -716,7 +716,7 @@ module Choicer =
                 Codec.map case11 (f11 (matcher >> (function Choice11Of11 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice11Of11 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -744,7 +744,7 @@ module Choicer =
                 Codec.map case12 (f12 (matcher >> (function Choice12Of12 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice12Of12 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -774,7 +774,7 @@ module Choicer =
                 Codec.map case13 (f13 (matcher >> (function Choice13Of13 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice13Of13 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -806,7 +806,7 @@ module Choicer =
                 Codec.map case14 (f14 (matcher >> (function Choice14Of14 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice14Of14 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -840,7 +840,7 @@ module Choicer =
                 Codec.map case15 (f15 (matcher >> (function Choice15Of15 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice15Of15 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -876,7 +876,7 @@ module Choicer =
                 Codec.map case16 (f16 (matcher >> (function Choice16Of16 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice16Of16 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16, case17) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16, case17) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -914,7 +914,7 @@ module Choicer =
                 Codec.map case17 (f17 (matcher >> (function Choice17Of17 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice17Of17 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16, case17, case18) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16, case17, case18) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -954,7 +954,7 @@ module Choicer =
                 Codec.map case18 (f18 (matcher >> (function Choice18Of18 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice18Of18 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16, case17, case18, case19) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16, case17, case18, case19) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))
@@ -996,7 +996,7 @@ module Choicer =
                 Codec.map case19 (f19 (matcher >> (function Choice19Of19 x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice19Of19 x -> Some x | _ -> None) >> Option.map fst))
             }
 
-        static member jcase (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16, case17, case18, case19, case20) = fun matcher ->
+        static member withCases (case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15, case16, case17, case18, case19, case20) = fun matcher ->
             let f1 (g: ('Union -> _)) : _ = g (case1 (nonNullTuple (): 'params1))
             let f2 (g: ('Union -> _)) : _ = g (case2 (nonNullTuple (): 'params2))
             let f3 (g: ('Union -> _)) : _ = g (case3 (nonNullTuple (): 'params3))

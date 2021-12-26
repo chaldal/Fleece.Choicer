@@ -26,7 +26,7 @@ let printJCase i =
     let printParams i = [1..i] |> List.map (fun i -> $"case{i}") |> String.concat ", "
     let printBindings i = $"{spaces 12}let f{i} (g: ('Union -> _)) : _ = g (case{i} (nonNullTuple (): 'params{i}))"
     let printMappings maxCases i = $"{spaces 16}Codec.map case{i} (f{i} (matcher >> (function Choice{i}Of{maxCases} x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice{i}Of{maxCases} x -> Some x | _ -> None) >> Option.map fst))"  
-    $"{spaces 8}static member jcase ({printParams i}) = fun matcher ->" + nl
+    $"{spaces 8}static member withCases ({printParams i}) = fun matcher ->" + nl
     + ([1..i] |> List.map printBindings |> String.concat nl) + nl
     + "            codec {" + nl
     + ([1..i] |> List.map (printMappings i) |> String.concat nl) + nl
@@ -51,5 +51,5 @@ module Choicer =
     + nl
     + ([1..maxCases] |> List.map (fun i -> printChoice i maxCases) |> String.concat (nl+nl)) + nl + nl
     + "    [<AutoOpen>]" + nl
-    + "    type jcases =" + nl
+    + "    type Cases =" + nl
     + ([1..maxCases] |> List.map printJCase |> String.concat nl)
