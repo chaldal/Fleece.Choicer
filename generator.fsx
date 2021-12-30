@@ -14,19 +14,19 @@ let printCase maxCases case =
 
 let printChoice minCase maxCase =
     let printOverload minCase case =
-        let tyParams = [1..case] |> List.map (fun i -> if i = minCase then "'x * 'y" else $"'x{i}") |> String.concat ", "
-        $"{spaces 8}static member Case (x: 'x, y: 'y, _: Choice<{tyParams}>) = Choice{minCase}Of{case} (x, y) : Choice<{tyParams}>"
-    $"    type Choice{minCase}OfN ={nl}{[minCase .. maxCase] |> List.map (fun i -> printOverload minCase i) |> String.concat nl}" + nl
-    + $"    let inline case{minCase} y (x: ('T -> 'fld option) -> Codec<PropertyList<'Encoding>, PropertyList<'Encoding>, 'fld, 'T>) : 'rt =" + nl
-    + $"{spaces 8}let inline call (_: ^t, _: ^r, (x, y: ^p)) = ((^t or ^r ) : (static member Case: _ * _ * ^r -> ^r) (y, x, Unchecked.defaultof<'r>) )" + nl
-    + $"{spaces 8}call (Unchecked.defaultof<Choice{minCase}OfN>, Unchecked.defaultof<'rt>, (x, y))"
+        let tyParams = [1..case] |> List.map (fun i -> if i = minCase then $"'params{minCase} * (('Union -> 'params{minCase} option) -> Codec<PropertyList<'Encoding>, PropertyList<'Encoding>, 'params{minCase}, 'Union>)" else $"'x{i}") |> String.concat ", "
+        $"{spaces 8}static member Case (x: 'params{minCase}, y: ('Union -> 'params{minCase} option) -> Codec<PropertyList<'Encoding>, PropertyList<'Encoding>, 'params{minCase}, 'Union>, _: Choice<{tyParams}>) = Choice{minCase}Of{case} (x, y) : Choice<{tyParams}>"
+    $"    type Choice{minCase}OfN ={nl}{[minCase .. maxCase] |> List.map (fun i -> printOverload minCase i) |> String.concat nl}" + nl + nl
+    + $"    let inline case{minCase} (x: 'params{minCase}) (y: ('Union -> 'params{minCase} option) -> Codec<PropertyList<'Encoding>, PropertyList<'Encoding>, 'params{minCase}, 'Union>) : '``Choice<..>`` =" + nl
+    + $"{spaces 8}let inline call (_: ^t, _: ^r, (x: ^p, y)) = ((^t or ^r ) : (static member Case: _ * _ * ^r -> ^r) (x, y, Unchecked.defaultof<'r>) )" + nl + nl
+    + $"{spaces 8}call (Unchecked.defaultof<Choice{minCase}OfN>, Unchecked.defaultof<'``Choice<..>``>, (x, y))"
 
 
 let printJCase i =
     let printParams i = [1..i] |> List.map (fun i -> $"case{i}") |> String.concat ", "
-    let printBindings i = $"{spaces 12}let f{i} (g: ('Union -> _)) : _ = g (case{i} (nonNullTuple (): 'params{i}))"
-    let printMappings maxCases i = $"{spaces 16}Codec.map case{i} (f{i} (matcher >> (function Choice{i}Of{maxCases} x -> Some x | _ -> None) >> Option.get >> snd) (matcher >> (function Choice{i}Of{maxCases} x -> Some x | _ -> None) >> Option.map fst))"  
-    $"{spaces 8}static member withCases ({printParams i}) = fun matcher ->" + nl
+    let printBindings i = $"{spaces 12}let f{i} (g: ('Union -> ('Union -> 'params{i} option) -> Codec<PropertyList<'Encoding>, PropertyList<'Encoding>, 'params{i}, 'Union>)) : _ = g (case{i} (nonNullTuple () : 'params{i}))"
+    let printMappings maxCases i = $"{spaces 16}Codec.map case{i} (f{i} (matcher >> (function Choice{i}Of{maxCases} x -> Some x | _ -> None) >> Option.defaultWith (fun () -> failwith \"Fleece.Choicer: wrong case{i}\") >> snd) (matcher >> (function Choice{i}Of{maxCases} x -> Some x | _ -> None) >> Option.map fst))"  
+    $"{spaces 8}static member withCases ({printParams i}) : _ -> Codec<PropertyList<'Encoding>, 'Union> = fun matcher ->" + nl
     + ([1..i] |> List.map printBindings |> String.concat nl) + nl
     + "            codec {" + nl
     + ([1..i] |> List.map (printMappings i) |> String.concat nl) + nl

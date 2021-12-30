@@ -35,7 +35,7 @@ which doesn't provide exhaustive check.
 
 ## How to build and pack
 
-1 - Add System.IO.File.WriteAllText ("Library.fs", printCode 40) to generator.fsx
+1 - Add `System.IO.File.WriteAllText ("Library.fs", printCode 40)` to generator.fsx
 
 2 - Send generator to fsi
 
